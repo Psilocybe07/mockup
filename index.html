@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realistic T-Shirt Mockup Generator</title>
+    <title>Simple T-Shirt Mockup Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,22 +49,16 @@
         .tshirt-container {
             position: relative;
             width: 400px;
-            height: 500px;
-        }
-        
-        .tshirt-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: 480px;
         }
         
         .print-area {
             position: absolute;
-            top: 150px;
+            top: 140px;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
-            height: 200px;
+            width: 220px;
+            height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -181,7 +175,7 @@
     </style>
 </head>
 <body>
-    <h1>Realistic T-Shirt Mockup Generator</h1>
+    <h1>Simple T-Shirt Mockup Generator</h1>
     
     <div class="container">
         <div class="controls">
@@ -191,18 +185,21 @@
                 <h3 class="section-title">T-Shirt Options</h3>
                 <label for="shirt-color">Shirt Color:</label>
                 <select id="shirt-color">
-                    <option value="white">White</option>
-                    <option value="black">Black</option>
-                    <option value="navy">Navy Blue</option>
-                    <option value="red">Red</option>
-                    <option value="gray">Gray</option>
+                    <option value="#FFFFFF">White</option>
+                    <option value="#000000">Black</option>
+                    <option value="#0a3d62">Navy Blue</option>
+                    <option value="#e74c3c">Red</option>
+                    <option value="#27ae60">Green</option>
+                    <option value="#7f8c8d">Gray</option>
+                    <option value="#f1c40f">Yellow</option>
+                    <option value="#8e44ad">Purple</option>
                 </select>
-                <div class="color-preview" id="shirt-color-preview" style="background-color: white;"></div>
+                <div class="color-preview" id="shirt-color-preview" style="background-color: #FFFFFF;"></div>
                 
-                <label for="shirt-style">Shirt Style:</label>
-                <select id="shirt-style">
+                <label for="neck-style">Neck Style:</label>
+                <select id="neck-style">
                     <option value="crew">Crew Neck</option>
-                    <option value="v-neck">V-Neck</option>
+                    <option value="v">V-Neck</option>
                 </select>
             </div>
             
@@ -213,15 +210,15 @@
                 
                 <label for="text-color">Text Color:</label>
                 <select id="text-color">
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="red">Red</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="purple">Purple</option>
+                    <option value="#000000">Black</option>
+                    <option value="#FFFFFF">White</option>
+                    <option value="#e74c3c">Red</option>
+                    <option value="#3498db">Blue</option>
+                    <option value="#27ae60">Green</option>
+                    <option value="#f1c40f">Yellow</option>
+                    <option value="#8e44ad">Purple</option>
                 </select>
-                <div class="color-preview" id="text-color-preview" style="background-color: black;"></div>
+                <div class="color-preview" id="text-color-preview" style="background-color: #000000;"></div>
                 
                 <label for="font-family">Font:</label>
                 <select id="font-family">
@@ -262,23 +259,47 @@
             <div class="settings-section">
                 <h3 class="section-title">Print Area</h3>
                 <label>Resize the print area by dragging the handle in the preview</label>
-                <label for="print-area-width">Width: <span id="print-area-width-value">180px</span></label>
-                <input type="range" id="print-area-width" min="100" max="300" value="180">
+                <label for="print-area-width">Width: <span id="print-area-width-value">220px</span></label>
+                <input type="range" id="print-area-width" min="100" max="300" value="220">
                 
-                <label for="print-area-height">Height: <span id="print-area-height-value">200px</span></label>
-                <input type="range" id="print-area-height" min="80" max="250" value="200">
+                <label for="print-area-height">Height: <span id="print-area-height-value">180px</span></label>
+                <input type="range" id="print-area-height" min="80" max="250" value="180">
                 
-                <label for="print-area-top">Vertical Position: <span id="print-area-top-value">150px</span></label>
-                <input type="range" id="print-area-top" min="100" max="220" value="150">
+                <label for="print-area-top">Vertical Position: <span id="print-area-top-value">140px</span></label>
+                <input type="range" id="print-area-top" min="100" max="220" value="140">
             </div>
-            
-            <button id="download-btn">Download Mockup</button>
         </div>
         
         <div class="preview">
             <h2>Preview</h2>
             <div class="tshirt-container" id="tshirt-container">
-                <img src="/api/placeholder/400/500" alt="T-shirt mockup" class="tshirt-img" id="tshirt-img">
+                <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" id="tshirt-svg">
+                    <!-- T-shirt base (main body) -->
+                    <path id="tshirt-body" d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="#FFFFFF"/>
+                    
+                    <!-- Crew neck -->
+                    <path id="crew-neck" d="M170,80 C170,100 230,100 230,80 L240,100 C240,110 200,130 160,100 Z" fill="#FFFFFF" fill-opacity="0.9"/>
+                    
+                    <!-- V neck (hidden by default) -->
+                    <path id="v-neck" d="M170,80 L200,120 L230,80 L240,100 C240,110 200,130 160,100 Z" fill="#FFFFFF" fill-opacity="0.9" style="display: none;"/>
+                    
+                    <!-- Left sleeve -->
+                    <path id="left-sleeve" d="M120,80 L120,180 C80,120 60,100 40,90 C60,70 80,80 120,80 Z" fill="#FFFFFF"/>
+                    
+                    <!-- Right sleeve -->
+                    <path id="right-sleeve" d="M280,80 L280,180 C320,120 340,100 360,90 C340,70 320,80 280,80 Z" fill="#FFFFFF"/>
+                    
+                    <!-- Shadows and highlights for 3D effect -->
+                    <path d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="black" fill-opacity="0.05" />
+                    <path d="M130,350 C150,365 180,360 200,355 C220,360 250,365 270,350" stroke="black" stroke-opacity="0.03" stroke-width="5" fill="none"/>
+                    <path d="M150,320 C170,330 190,325 200,325 C210,325 230,330 250,320" stroke="black" stroke-opacity="0.04" stroke-width="3" fill="none"/>
+                    <path d="M120,100 C100,120 80,130 60,120" stroke="black" stroke-opacity="0.03" stroke-width="2" fill="none"/>
+                    <path d="M280,100 C300,120 320,130 340,120" stroke="black" stroke-opacity="0.03" stroke-width="2" fill="none"/>
+                    
+                    <!-- Collar detail -->
+                    <path id="collar-detail" d="M170,80 C170,100 230,100 230,80" stroke="black" stroke-opacity="0.1" stroke-width="1" fill="none"/>
+                </svg>
+                
                 <div class="print-area" id="print-area">
                     <div class="tshirt-text" id="tshirt-text">Hello World!</div>
                     <div class="print-area-handle" id="print-area-handle"></div>
@@ -288,27 +309,9 @@
     </div>
     
     <script>
-        // T-shirt images (in a real implementation, you would use actual image URLs)
-        const tshirtImages = {
-            'crew': {
-                'white': 'https://unblast.com/wp-content/uploads/2023/10/Blank-T-shirt-Mockup-PSD.jpg',
-                'black': '/api/placeholder/400/500',
-                'navy': '/api/placeholder/400/500',
-                'red': '/api/placeholder/400/500',
-                'gray': '/api/placeholder/400/500'
-            },
-            'v-neck': {
-                'white': '/api/placeholder/400/500',
-                'black': '/api/placeholder/400/500',
-                'navy': '/api/placeholder/400/500',
-                'red': '/api/placeholder/400/500',
-                'gray': '/api/placeholder/400/500'
-            }
-        };
-        
         // Get all the control elements
         const shirtColorSelect = document.getElementById('shirt-color');
-        const shirtStyleSelect = document.getElementById('shirt-style');
+        const neckStyleSelect = document.getElementById('neck-style');
         const textContentTextarea = document.getElementById('text-content');
         const textColorSelect = document.getElementById('text-color');
         const fontFamilySelect = document.getElementById('font-family');
@@ -320,7 +323,6 @@
         const underlineCheckbox = document.getElementById('underline-text');
         const shirtColorPreview = document.getElementById('shirt-color-preview');
         const textColorPreview = document.getElementById('text-color-preview');
-        const downloadBtn = document.getElementById('download-btn');
         
         // Print area elements
         const printArea = document.getElementById('print-area');
@@ -333,28 +335,43 @@
         const printAreaTopValue = document.getElementById('print-area-top-value');
         
         // Get the shirt elements
-        const tshirtImg = document.getElementById('tshirt-img');
+        const tshirtBody = document.getElementById('tshirt-body');
+        const crewNeck = document.getElementById('crew-neck');
+        const vNeck = document.getElementById('v-neck');
+        const leftSleeve = document.getElementById('left-sleeve');
+        const rightSleeve = document.getElementById('right-sleeve');
+        const collarDetail = document.getElementById('collar-detail');
         const tshirtContainer = document.getElementById('tshirt-container');
         const tshirtText = document.getElementById('tshirt-text');
         
         // Update functions
-        function updateShirtImage() {
+        function updateShirtColor() {
             const color = shirtColorSelect.value;
-            const style = shirtStyleSelect.value;
-            
-            // In a real implementation, this would be an actual image URL
-            const imageUrl = tshirtImages[style][color];
-            tshirtImg.src = imageUrl;
-            
+            tshirtBody.setAttribute('fill', color);
+            leftSleeve.setAttribute('fill', color);
+            rightSleeve.setAttribute('fill', color);
+            crewNeck.setAttribute('fill', color);
+            vNeck.setAttribute('fill', color);
             shirtColorPreview.style.backgroundColor = color;
             
             // Adjust text color contrast automatically if needed
-            if (color === 'black' && textColorSelect.value === 'black') {
-                textColorSelect.value = 'white';
+            if (color === '#000000' && textColorSelect.value === '#000000') {
+                textColorSelect.value = '#FFFFFF';
                 updateTextColor();
-            } else if (color === 'white' && textColorSelect.value === 'white') {
-                textColorSelect.value = 'black';
+            } else if (color === '#FFFFFF' && textColorSelect.value === '#FFFFFF') {
+                textColorSelect.value = '#000000';
                 updateTextColor();
+            }
+        }
+        
+        function updateNeckStyle() {
+            const style = neckStyleSelect.value;
+            if (style === 'crew') {
+                crewNeck.style.display = 'block';
+                vNeck.style.display = 'none';
+            } else {
+                crewNeck.style.display = 'none';
+                vNeck.style.display = 'block';
             }
         }
         
@@ -466,16 +483,9 @@
             isResizing = false;
         });
         
-        // Download functionality (simplified for this example)
-        downloadBtn.addEventListener('click', () => {
-            alert('In a complete implementation, this would download the mockup as an image.');
-            // A real implementation would use html2canvas or a similar library
-            // to capture the tshirt-container as an image and download it
-        });
-        
         // Add event listeners
-        shirtColorSelect.addEventListener('change', updateShirtImage);
-        shirtStyleSelect.addEventListener('change', updateShirtImage);
+        shirtColorSelect.addEventListener('change', updateShirtColor);
+        neckStyleSelect.addEventListener('change', updateNeckStyle);
         textContentTextarea.addEventListener('input', updateTextContent);
         textColorSelect.addEventListener('change', updateTextColor);
         fontFamilySelect.addEventListener('change', updateFontFamily);
@@ -490,7 +500,8 @@
         printAreaTopRange.addEventListener('input', updatePrintAreaPosition);
         
         // Initialize the preview
-        updateShirtImage();
+        updateShirtColor();
+        updateNeckStyle();
         updateTextContent();
         updateTextColor();
         updateFontFamily();
