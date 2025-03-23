@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-Shirt Design Mockup Creator</title>
+    <title>Realistic T-Shirt Design Mockup Creator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             width: 100%;
             max-width: 1200px;
         }
@@ -49,36 +49,68 @@
         .tshirt-container {
             position: relative;
             width: 400px;
-            height: 400px;
+            height: 480px;
+            perspective: 800px;
         }
         
         .tshirt-img {
             width: 100%;
             height: 100%;
+            transition: all 0.3s;
+        }
+        
+        .print-area {
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 180px;
+            border: 2px dashed rgba(0,0,0,0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .print-area-handle {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 16px;
+            height: 16px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: se-resize;
         }
         
         .tshirt-text {
-            position: absolute;
-            top: 150px;
-            left: 0;
             width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 0 60px;
+            padding: 10px;
             box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-y: auto;
         }
         
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin: 12px 0 5px;
             font-weight: bold;
         }
         
         select, input, textarea {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            box-sizing: border-box;
         }
         
         textarea {
@@ -90,10 +122,12 @@
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
+            width: 100%;
+            font-weight: bold;
         }
         
         button:hover {
@@ -107,94 +141,202 @@
         
         .color-preview {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border: 1px solid #ccc;
             vertical-align: middle;
             margin-left: 5px;
+            border-radius: 50%;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            margin: 0;
+        }
+        
+        .checkbox-label input {
+            width: auto;
+            margin-right: 5px;
+            margin-bottom: 0;
+        }
+        
+        .shadow {
+            filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.2));
+        }
+        
+        .view-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .view-btn {
+            flex: 1;
+            padding: 8px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .view-btn.active {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        
+        .settings-section {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <h1>T-Shirt Design Mockup Creator</h1>
+    <h1>Realistic T-Shirt Design Mockup Creator</h1>
     
     <div class="container">
         <div class="controls">
             <h2>Design Controls</h2>
             
-            <label for="shirt-color">Shirt Color:</label>
-            <select id="shirt-color">
-                <option value="white">White</option>
-                <option value="black">Black</option>
-                <option value="navy">Navy Blue</option>
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-                <option value="gray">Gray</option>
-            </select>
-            <div class="color-preview" id="shirt-color-preview" style="background-color: white;"></div>
+            <div class="settings-section">
+                <h3 class="section-title">T-Shirt Options</h3>
+                <label for="shirt-color">Shirt Color:</label>
+                <select id="shirt-color">
+                    <option value="white">White</option>
+                    <option value="black">Black</option>
+                    <option value="navy">Navy Blue</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="#444">Dark Gray</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="purple">Purple</option>
+                </select>
+                <div class="color-preview" id="shirt-color-preview" style="background-color: white;"></div>
+            </div>
             
-            <label for="text-content">T-Shirt Text:</label>
-            <textarea id="text-content" placeholder="Enter the text for your t-shirt design here...">Hello World!</textarea>
-            
-            <label for="text-color">Text Color:</label>
-            <select id="text-color">
-                <option value="black">Black</option>
-                <option value="white">White</option>
-                <option value="red">Red</option>
-                <option value="blue">Blue</option>
-                <option value="green">Green</option>
-                <option value="yellow">Yellow</option>
-                <option value="purple">Purple</option>
-            </select>
-            <div class="color-preview" id="text-color-preview" style="background-color: black;"></div>
-            
-            <label for="font-family">Font:</label>
-            <select id="font-family">
-                <option value="Arial, sans-serif">Arial</option>
-                <option value="'Times New Roman', serif">Times New Roman</option>
-                <option value="'Courier New', monospace">Courier New</option>
-                <option value="Impact, sans-serif">Impact</option>
-                <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
-                <option value="'Georgia', serif">Georgia</option>
-            </select>
-            
-            <label for="font-size">Font Size:</label>
-            <input type="range" id="font-size" min="12" max="48" value="24">
-            <span id="font-size-value">24px</span>
-            
-            <label for="text-align">Text Alignment:</label>
-            <select id="text-align">
-                <option value="center">Center</option>
-                <option value="left">Left</option>
-                <option value="right">Right</option>
-            </select>
-            
-            <label for="vertical-position">Vertical Position:</label>
-            <input type="range" id="vertical-position" min="100" max="220" value="150">
-            
-            <label>Text Style:</label>
-            <div>
-                <input type="checkbox" id="bold-text"> 
-                <label for="bold-text" style="display: inline;">Bold</label>
+            <div class="settings-section">
+                <h3 class="section-title">Text Options</h3>
+                <label for="text-content">T-Shirt Text:</label>
+                <textarea id="text-content" placeholder="Enter the text for your t-shirt design here...">Hello World!</textarea>
                 
-                <input type="checkbox" id="italic-text">
-                <label for="italic-text" style="display: inline;">Italic</label>
+                <label for="text-color">Text Color:</label>
+                <select id="text-color">
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="purple">Purple</option>
+                </select>
+                <div class="color-preview" id="text-color-preview" style="background-color: black;"></div>
                 
-                <input type="checkbox" id="underline-text">
-                <label for="underline-text" style="display: inline;">Underline</label>
+                <label for="font-family">Font:</label>
+                <select id="font-family">
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', serif">Times New Roman</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="Impact, sans-serif">Impact</option>
+                    <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                    <option value="'Georgia', serif">Georgia</option>
+                </select>
+                
+                <label for="font-size">Font Size: <span id="font-size-value">24px</span></label>
+                <input type="range" id="font-size" min="12" max="60" value="24">
+                
+                <label for="text-align">Text Alignment:</label>
+                <select id="text-align">
+                    <option value="center">Center</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </select>
+                
+                <label>Text Style:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="bold-text"> Bold
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="italic-text"> Italic
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="underline-text"> Underline
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="section-title">Print Area</h3>
+                <label>Resize the print area by dragging the handle in the preview</label>
+                <label for="print-area-width">Width: <span id="print-area-width-value">220px</span></label>
+                <input type="range" id="print-area-width" min="100" max="300" value="220">
+                
+                <label for="print-area-height">Height: <span id="print-area-height-value">180px</span></label>
+                <input type="range" id="print-area-height" min="80" max="250" value="180">
+                
+                <label for="print-area-top">Vertical Position: <span id="print-area-top-value">140px</span></label>
+                <input type="range" id="print-area-top" min="100" max="220" value="140">
             </div>
         </div>
         
         <div class="preview">
             <h2>Preview</h2>
-            <div class="tshirt-container">
-                <svg class="tshirt-img" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                    <!-- T-shirt shape -->
-                    <path id="tshirt-path" d="M150,50 L250,50 C250,50 270,80 290,90 C310,100 350,110 350,110 L330,150 C330,150 310,140 300,150 C300,200 300,300 300,350 L100,350 C100,300 100,200 100,150 C90,140 70,150 70,150 L50,110 C50,110 90,100 110,90 C130,80 150,50 150,50 Z" fill="white" stroke="#ccc" stroke-width="2" />
+            <div class="tshirt-container" id="tshirt-container">
+                <svg class="tshirt-img shadow" viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" id="tshirt-svg">
+                    <!-- T-shirt base (main body) -->
+                    <path id="tshirt-path" d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="white"/>
+                    
                     <!-- Collar -->
-                    <path d="M170,50 C170,70 230,70 230,50" fill="none" stroke="#ccc" stroke-width="2" />
+                    <path id="collar" d="M170,80 C170,100 230,100 230,80 L240,100 C240,110 200,130 160,100 Z" fill="white" fill-opacity="0.9"/>
+                    
+                    <!-- Left sleeve -->
+                    <path id="left-sleeve" d="M120,80 L120,180 C80,120 60,100 40,90 C60,70 80,80 120,80 Z" fill="white"/>
+                    
+                    <!-- Right sleeve -->
+                    <path id="right-sleeve" d="M280,80 L280,180 C320,120 340,100 360,90 C340,70 320,80 280,80 Z" fill="white"/>
+                    
+                    <!-- Shadows and highlights -->
+                    <path d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="black" fill-opacity="0.05" />
+                    <path d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="white" fill-opacity="0.2" />
+                    
+                    <!-- Folds and wrinkles -->
+                    <path d="M130,350 C150,365 180,360 200,355 C220,360 250,365 270,350" stroke="black" stroke-opacity="0.03" stroke-width="5" fill="none"/>
+                    <path d="M150,320 C170,330 190,325 200,325 C210,325 230,330 250,320" stroke="black" stroke-opacity="0.04" stroke-width="3" fill="none"/>
+                    
+                    <!-- Sleeve detail left -->
+                    <path d="M120,100 C100,120 80,130 60,120" stroke="black" stroke-opacity="0.03" stroke-width="2" fill="none"/>
+                    
+                    <!-- Sleeve detail right -->
+                    <path d="M280,100 C300,120 320,130 340,120" stroke="black" stroke-opacity="0.03" stroke-width="2" fill="none"/>
                 </svg>
-                <div class="tshirt-text" id="tshirt-text">Hello World!</div>
+                
+                <div class="print-area" id="print-area">
+                    <div class="tshirt-text" id="tshirt-text">Hello World!</div>
+                    <div class="print-area-handle" id="print-area-handle"></div>
+                </div>
+            </div>
+            
+            <div class="view-controls">
+                <button class="view-btn active" id="front-view">Front View</button>
+                <button class="view-btn" id="rotate-left">Rotate Left</button>
+                <button class="view-btn" id="rotate-right">Rotate Right</button>
             </div>
         </div>
     </div>
@@ -208,22 +350,53 @@
         const fontSizeRange = document.getElementById('font-size');
         const fontSizeValue = document.getElementById('font-size-value');
         const textAlignSelect = document.getElementById('text-align');
-        const verticalPositionRange = document.getElementById('vertical-position');
         const boldCheckbox = document.getElementById('bold-text');
         const italicCheckbox = document.getElementById('italic-text');
         const underlineCheckbox = document.getElementById('underline-text');
         const shirtColorPreview = document.getElementById('shirt-color-preview');
         const textColorPreview = document.getElementById('text-color-preview');
         
-        // Get the elements to update
+        // Print area elements
+        const printArea = document.getElementById('print-area');
+        const printAreaHandle = document.getElementById('print-area-handle');
+        const printAreaWidthRange = document.getElementById('print-area-width');
+        const printAreaWidthValue = document.getElementById('print-area-width-value');
+        const printAreaHeightRange = document.getElementById('print-area-height');
+        const printAreaHeightValue = document.getElementById('print-area-height-value');
+        const printAreaTopRange = document.getElementById('print-area-top');
+        const printAreaTopValue = document.getElementById('print-area-top-value');
+        
+        // Get the shirt elements
         const tshirtPath = document.getElementById('tshirt-path');
+        const tshirtContainer = document.getElementById('tshirt-container');
+        const tshirtSvg = document.getElementById('tshirt-svg');
+        const leftSleeve = document.getElementById('left-sleeve');
+        const rightSleeve = document.getElementById('right-sleeve');
+        const collar = document.getElementById('collar');
         const tshirtText = document.getElementById('tshirt-text');
+        
+        // View control buttons
+        const frontViewBtn = document.getElementById('front-view');
+        const rotateLeftBtn = document.getElementById('rotate-left');
+        const rotateRightBtn = document.getElementById('rotate-right');
         
         // Update functions
         function updateShirtColor() {
             const color = shirtColorSelect.value;
             tshirtPath.setAttribute('fill', color);
+            leftSleeve.setAttribute('fill', color);
+            rightSleeve.setAttribute('fill', color);
+            collar.setAttribute('fill', color);
             shirtColorPreview.style.backgroundColor = color;
+            
+            // Adjust text color contrast automatically if needed
+            if (color === 'black' && textColorSelect.value === 'black') {
+                textColorSelect.value = 'white';
+                updateTextColor();
+            } else if (color === 'white' && textColorSelect.value === 'white') {
+                textColorSelect.value = 'black';
+                updateTextColor();
+            }
         }
         
         function updateTextContent() {
@@ -244,20 +417,123 @@
             const size = fontSizeRange.value;
             tshirtText.style.fontSize = `${size}px`;
             fontSizeValue.textContent = `${size}px`;
+            
+            // Adjust font size to fit inside print area
+            adjustTextToFit();
         }
         
         function updateTextAlign() {
             tshirtText.style.textAlign = textAlignSelect.value;
         }
         
-        function updateVerticalPosition() {
-            tshirtText.style.top = `${verticalPositionRange.value}px`;
-        }
-        
         function updateTextStyle() {
             tshirtText.style.fontWeight = boldCheckbox.checked ? 'bold' : 'normal';
             tshirtText.style.fontStyle = italicCheckbox.checked ? 'italic' : 'normal';
             tshirtText.style.textDecoration = underlineCheckbox.checked ? 'underline' : 'none';
+            
+            // Adjust text to fit after style changes
+            adjustTextToFit();
+        }
+        
+        function updatePrintAreaSize() {
+            const width = printAreaWidthRange.value;
+            const height = printAreaHeightRange.value;
+            
+            printArea.style.width = `${width}px`;
+            printArea.style.height = `${height}px`;
+            
+            printAreaWidthValue.textContent = `${width}px`;
+            printAreaHeightValue.textContent = `${height}px`;
+            
+            // Adjust text to fit after size changes
+            adjustTextToFit();
+        }
+        
+        function updatePrintAreaPosition() {
+            const top = printAreaTopRange.value;
+            
+            printArea.style.top = `${top}px`;
+            printAreaTopValue.textContent = `${top}px`;
+        }
+        
+        function adjustTextToFit() {
+            // Making sure text fits within the boundaries
+            const fontSize = parseInt(fontSizeRange.value);
+            const textLength = textContentTextarea.value.length;
+            const areaWidth = parseInt(printAreaWidthRange.value);
+            const areaHeight = parseInt(printAreaHeightRange.value);
+            
+            // Simple algorithm to adjust font size if text is too long
+            // More sophisticated algorithms could be used for better results
+            if (textLength > 50 && fontSize > 20) {
+                const newSize = Math.max(12, fontSize - Math.floor(textLength / 50) * 2);
+                fontSizeRange.value = newSize;
+                tshirtText.style.fontSize = `${newSize}px`;
+                fontSizeValue.textContent = `${newSize}px`;
+            }
+        }
+        
+        // Print area resizing functionality
+        let isResizing = false;
+        printAreaHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            
+            const tshirtContainerRect = tshirtContainer.getBoundingClientRect();
+            const printAreaRect = printArea.getBoundingClientRect();
+            
+            // Calculate new width and height based on mouse position
+            let newWidth = e.clientX - printAreaRect.left;
+            let newHeight = e.clientY - printAreaRect.top;
+            
+            // Set constraints to keep print area within t-shirt
+            newWidth = Math.max(100, Math.min(300, newWidth));
+            newHeight = Math.max(80, Math.min(250, newHeight));
+            
+            // Update sliders
+            printAreaWidthRange.value = newWidth;
+            printAreaHeightRange.value = newHeight;
+            
+            // Update print area
+            updatePrintAreaSize();
+            
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+        });
+        
+        // T-shirt view controls
+        let currentRotation = 0;
+        
+        frontViewBtn.addEventListener('click', () => {
+            currentRotation = 0;
+            tshirtSvg.style.transform = `rotateY(0deg)`;
+            setActiveViewButton(frontViewBtn);
+        });
+        
+        rotateLeftBtn.addEventListener('click', () => {
+            currentRotation = 15;
+            tshirtSvg.style.transform = `rotateY(${currentRotation}deg)`;
+            setActiveViewButton(rotateLeftBtn);
+        });
+        
+        rotateRightBtn.addEventListener('click', () => {
+            currentRotation = -15;
+            tshirtSvg.style.transform = `rotateY(${currentRotation}deg)`;
+            setActiveViewButton(rotateRightBtn);
+        });
+        
+        function setActiveViewButton(activeBtn) {
+            [frontViewBtn, rotateLeftBtn, rotateRightBtn].forEach(btn => {
+                btn.classList.remove('active');
+            });
+            activeBtn.classList.add('active');
         }
         
         // Add event listeners
@@ -267,10 +543,13 @@
         fontFamilySelect.addEventListener('change', updateFontFamily);
         fontSizeRange.addEventListener('input', updateFontSize);
         textAlignSelect.addEventListener('change', updateTextAlign);
-        verticalPositionRange.addEventListener('input', updateVerticalPosition);
         boldCheckbox.addEventListener('change', updateTextStyle);
         italicCheckbox.addEventListener('change', updateTextStyle);
         underlineCheckbox.addEventListener('change', updateTextStyle);
+        
+        printAreaWidthRange.addEventListener('input', updatePrintAreaSize);
+        printAreaHeightRange.addEventListener('input', updatePrintAreaSize);
+        printAreaTopRange.addEventListener('input', updatePrintAreaPosition);
         
         // Initialize the preview
         updateShirtColor();
@@ -279,8 +558,9 @@
         updateFontFamily();
         updateFontSize();
         updateTextAlign();
-        updateVerticalPosition();
         updateTextStyle();
+        updatePrintAreaSize();
+        updatePrintAreaPosition();
     </script>
 </body>
 </html>
