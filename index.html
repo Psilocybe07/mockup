@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realistic T-Shirt Design Mockup Creator</title>
+    <title>Realistic T-Shirt Mockup Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,40 +49,26 @@
         .tshirt-container {
             position: relative;
             width: 400px;
-            height: 480px;
-            perspective: 800px;
+            height: 500px;
         }
         
         .tshirt-img {
             width: 100%;
             height: 100%;
-            transition: all 0.3s;
+            object-fit: contain;
         }
         
         .print-area {
             position: absolute;
-            top: 140px;
+            top: 150px;
             left: 50%;
             transform: translateX(-50%);
-            width: 220px;
-            height: 180px;
-            border: 2px dashed rgba(0,0,0,0.1);
-            border-radius: 5px;
+            width: 180px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-        }
-        
-        .print-area-handle {
-            position: absolute;
-            bottom: -8px;
-            right: -8px;
-            width: 16px;
-            height: 16px;
-            background-color: #4CAF50;
-            border-radius: 50%;
-            cursor: se-resize;
         }
         
         .tshirt-text {
@@ -167,30 +153,6 @@
             margin-bottom: 0;
         }
         
-        .shadow {
-            filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.2));
-        }
-        
-        .view-controls {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-        
-        .view-btn {
-            flex: 1;
-            padding: 8px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-        
-        .view-btn.active {
-            background-color: #e0e0e0;
-            font-weight: bold;
-        }
-        
         .settings-section {
             padding: 15px;
             margin-bottom: 15px;
@@ -204,10 +166,22 @@
             color: #444;
             font-size: 16px;
         }
+        
+        .print-area-handle {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 16px;
+            height: 16px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: se-resize;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
-    <h1>Realistic T-Shirt Design Mockup Creator</h1>
+    <h1>Realistic T-Shirt Mockup Generator</h1>
     
     <div class="container">
         <div class="controls">
@@ -221,12 +195,15 @@
                     <option value="black">Black</option>
                     <option value="navy">Navy Blue</option>
                     <option value="red">Red</option>
-                    <option value="green">Green</option>
-                    <option value="#444">Dark Gray</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="purple">Purple</option>
+                    <option value="gray">Gray</option>
                 </select>
                 <div class="color-preview" id="shirt-color-preview" style="background-color: white;"></div>
+                
+                <label for="shirt-style">Shirt Style:</label>
+                <select id="shirt-style">
+                    <option value="crew">Crew Neck</option>
+                    <option value="v-neck">V-Neck</option>
+                </select>
             </div>
             
             <div class="settings-section">
@@ -285,65 +262,53 @@
             <div class="settings-section">
                 <h3 class="section-title">Print Area</h3>
                 <label>Resize the print area by dragging the handle in the preview</label>
-                <label for="print-area-width">Width: <span id="print-area-width-value">220px</span></label>
-                <input type="range" id="print-area-width" min="100" max="300" value="220">
+                <label for="print-area-width">Width: <span id="print-area-width-value">180px</span></label>
+                <input type="range" id="print-area-width" min="100" max="300" value="180">
                 
-                <label for="print-area-height">Height: <span id="print-area-height-value">180px</span></label>
-                <input type="range" id="print-area-height" min="80" max="250" value="180">
+                <label for="print-area-height">Height: <span id="print-area-height-value">200px</span></label>
+                <input type="range" id="print-area-height" min="80" max="250" value="200">
                 
-                <label for="print-area-top">Vertical Position: <span id="print-area-top-value">140px</span></label>
-                <input type="range" id="print-area-top" min="100" max="220" value="140">
+                <label for="print-area-top">Vertical Position: <span id="print-area-top-value">150px</span></label>
+                <input type="range" id="print-area-top" min="100" max="220" value="150">
             </div>
+            
+            <button id="download-btn">Download Mockup</button>
         </div>
         
         <div class="preview">
             <h2>Preview</h2>
             <div class="tshirt-container" id="tshirt-container">
-                <svg class="tshirt-img shadow" viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" id="tshirt-svg">
-                    <!-- T-shirt base (main body) -->
-                    <path id="tshirt-path" d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="white"/>
-                    
-                    <!-- Collar -->
-                    <path id="collar" d="M170,80 C170,100 230,100 230,80 L240,100 C240,110 200,130 160,100 Z" fill="white" fill-opacity="0.9"/>
-                    
-                    <!-- Left sleeve -->
-                    <path id="left-sleeve" d="M120,80 L120,180 C80,120 60,100 40,90 C60,70 80,80 120,80 Z" fill="white"/>
-                    
-                    <!-- Right sleeve -->
-                    <path id="right-sleeve" d="M280,80 L280,180 C320,120 340,100 360,90 C340,70 320,80 280,80 Z" fill="white"/>
-                    
-                    <!-- Shadows and highlights -->
-                    <path d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="black" fill-opacity="0.05" />
-                    <path d="M120,80 L280,80 L280,400 C280,440 240,460 200,460 C160,460 120,440 120,400 Z" fill="white" fill-opacity="0.2" />
-                    
-                    <!-- Folds and wrinkles -->
-                    <path d="M130,350 C150,365 180,360 200,355 C220,360 250,365 270,350" stroke="black" stroke-opacity="0.03" stroke-width="5" fill="none"/>
-                    <path d="M150,320 C170,330 190,325 200,325 C210,325 230,330 250,320" stroke="black" stroke-opacity="0.04" stroke-width="3" fill="none"/>
-                    
-                    <!-- Sleeve detail left -->
-                    <path d="M120,100 C100,120 80,130 60,120" stroke="black" stroke-opacity="0.03" stroke-width="2" fill="none"/>
-                    
-                    <!-- Sleeve detail right -->
-                    <path d="M280,100 C300,120 320,130 340,120" stroke="black" stroke-opacity="0.03" stroke-width="2" fill="none"/>
-                </svg>
-                
+                <img src="/api/placeholder/400/500" alt="T-shirt mockup" class="tshirt-img" id="tshirt-img">
                 <div class="print-area" id="print-area">
                     <div class="tshirt-text" id="tshirt-text">Hello World!</div>
                     <div class="print-area-handle" id="print-area-handle"></div>
                 </div>
             </div>
-            
-            <div class="view-controls">
-                <button class="view-btn active" id="front-view">Front View</button>
-                <button class="view-btn" id="rotate-left">Rotate Left</button>
-                <button class="view-btn" id="rotate-right">Rotate Right</button>
-            </div>
         </div>
     </div>
     
     <script>
+        // T-shirt images (in a real implementation, you would use actual image URLs)
+        const tshirtImages = {
+            'crew': {
+                'white': '/api/placeholder/400/500',
+                'black': '/api/placeholder/400/500',
+                'navy': '/api/placeholder/400/500',
+                'red': '/api/placeholder/400/500',
+                'gray': '/api/placeholder/400/500'
+            },
+            'v-neck': {
+                'white': '/api/placeholder/400/500',
+                'black': '/api/placeholder/400/500',
+                'navy': '/api/placeholder/400/500',
+                'red': '/api/placeholder/400/500',
+                'gray': '/api/placeholder/400/500'
+            }
+        };
+        
         // Get all the control elements
         const shirtColorSelect = document.getElementById('shirt-color');
+        const shirtStyleSelect = document.getElementById('shirt-style');
         const textContentTextarea = document.getElementById('text-content');
         const textColorSelect = document.getElementById('text-color');
         const fontFamilySelect = document.getElementById('font-family');
@@ -355,6 +320,7 @@
         const underlineCheckbox = document.getElementById('underline-text');
         const shirtColorPreview = document.getElementById('shirt-color-preview');
         const textColorPreview = document.getElementById('text-color-preview');
+        const downloadBtn = document.getElementById('download-btn');
         
         // Print area elements
         const printArea = document.getElementById('print-area');
@@ -367,26 +333,19 @@
         const printAreaTopValue = document.getElementById('print-area-top-value');
         
         // Get the shirt elements
-        const tshirtPath = document.getElementById('tshirt-path');
+        const tshirtImg = document.getElementById('tshirt-img');
         const tshirtContainer = document.getElementById('tshirt-container');
-        const tshirtSvg = document.getElementById('tshirt-svg');
-        const leftSleeve = document.getElementById('left-sleeve');
-        const rightSleeve = document.getElementById('right-sleeve');
-        const collar = document.getElementById('collar');
         const tshirtText = document.getElementById('tshirt-text');
         
-        // View control buttons
-        const frontViewBtn = document.getElementById('front-view');
-        const rotateLeftBtn = document.getElementById('rotate-left');
-        const rotateRightBtn = document.getElementById('rotate-right');
-        
         // Update functions
-        function updateShirtColor() {
+        function updateShirtImage() {
             const color = shirtColorSelect.value;
-            tshirtPath.setAttribute('fill', color);
-            leftSleeve.setAttribute('fill', color);
-            rightSleeve.setAttribute('fill', color);
-            collar.setAttribute('fill', color);
+            const style = shirtStyleSelect.value;
+            
+            // In a real implementation, this would be an actual image URL
+            const imageUrl = tshirtImages[style][color];
+            tshirtImg.src = imageUrl;
+            
             shirtColorPreview.style.backgroundColor = color;
             
             // Adjust text color contrast automatically if needed
@@ -464,7 +423,6 @@
             const areaHeight = parseInt(printAreaHeightRange.value);
             
             // Simple algorithm to adjust font size if text is too long
-            // More sophisticated algorithms could be used for better results
             if (textLength > 50 && fontSize > 20) {
                 const newSize = Math.max(12, fontSize - Math.floor(textLength / 50) * 2);
                 fontSizeRange.value = newSize;
@@ -508,36 +466,16 @@
             isResizing = false;
         });
         
-        // T-shirt view controls
-        let currentRotation = 0;
-        
-        frontViewBtn.addEventListener('click', () => {
-            currentRotation = 0;
-            tshirtSvg.style.transform = `rotateY(0deg)`;
-            setActiveViewButton(frontViewBtn);
+        // Download functionality (simplified for this example)
+        downloadBtn.addEventListener('click', () => {
+            alert('In a complete implementation, this would download the mockup as an image.');
+            // A real implementation would use html2canvas or a similar library
+            // to capture the tshirt-container as an image and download it
         });
-        
-        rotateLeftBtn.addEventListener('click', () => {
-            currentRotation = 15;
-            tshirtSvg.style.transform = `rotateY(${currentRotation}deg)`;
-            setActiveViewButton(rotateLeftBtn);
-        });
-        
-        rotateRightBtn.addEventListener('click', () => {
-            currentRotation = -15;
-            tshirtSvg.style.transform = `rotateY(${currentRotation}deg)`;
-            setActiveViewButton(rotateRightBtn);
-        });
-        
-        function setActiveViewButton(activeBtn) {
-            [frontViewBtn, rotateLeftBtn, rotateRightBtn].forEach(btn => {
-                btn.classList.remove('active');
-            });
-            activeBtn.classList.add('active');
-        }
         
         // Add event listeners
-        shirtColorSelect.addEventListener('change', updateShirtColor);
+        shirtColorSelect.addEventListener('change', updateShirtImage);
+        shirtStyleSelect.addEventListener('change', updateShirtImage);
         textContentTextarea.addEventListener('input', updateTextContent);
         textColorSelect.addEventListener('change', updateTextColor);
         fontFamilySelect.addEventListener('change', updateFontFamily);
@@ -552,7 +490,7 @@
         printAreaTopRange.addEventListener('input', updatePrintAreaPosition);
         
         // Initialize the preview
-        updateShirtColor();
+        updateShirtImage();
         updateTextContent();
         updateTextColor();
         updateFontFamily();
