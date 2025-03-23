@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Design Mockup Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .controls {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .preview {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .tshirt-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+        
+        .tshirt-img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .tshirt-text {
+            position: absolute;
+            top: 150px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 0 60px;
+            box-sizing: border-box;
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .color-preview {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>T-Shirt Design Mockup Creator</h1>
+    
+    <div class="container">
+        <div class="controls">
+            <h2>Design Controls</h2>
+            
+            <label for="shirt-color">Shirt Color:</label>
+            <select id="shirt-color">
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="navy">Navy Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="gray">Gray</option>
+            </select>
+            <div class="color-preview" id="shirt-color-preview" style="background-color: white;"></div>
+            
+            <label for="text-content">T-Shirt Text:</label>
+            <textarea id="text-content" placeholder="Enter the text for your t-shirt design here...">Hello World!</textarea>
+            
+            <label for="text-color">Text Color:</label>
+            <select id="text-color">
+                <option value="black">Black</option>
+                <option value="white">White</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="yellow">Yellow</option>
+                <option value="purple">Purple</option>
+            </select>
+            <div class="color-preview" id="text-color-preview" style="background-color: black;"></div>
+            
+            <label for="font-family">Font:</label>
+            <select id="font-family">
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'Times New Roman', serif">Times New Roman</option>
+                <option value="'Courier New', monospace">Courier New</option>
+                <option value="Impact, sans-serif">Impact</option>
+                <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                <option value="'Georgia', serif">Georgia</option>
+            </select>
+            
+            <label for="font-size">Font Size:</label>
+            <input type="range" id="font-size" min="12" max="48" value="24">
+            <span id="font-size-value">24px</span>
+            
+            <label for="text-align">Text Alignment:</label>
+            <select id="text-align">
+                <option value="center">Center</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+            
+            <label for="vertical-position">Vertical Position:</label>
+            <input type="range" id="vertical-position" min="100" max="220" value="150">
+            
+            <label>Text Style:</label>
+            <div>
+                <input type="checkbox" id="bold-text"> 
+                <label for="bold-text" style="display: inline;">Bold</label>
+                
+                <input type="checkbox" id="italic-text">
+                <label for="italic-text" style="display: inline;">Italic</label>
+                
+                <input type="checkbox" id="underline-text">
+                <label for="underline-text" style="display: inline;">Underline</label>
+            </div>
+        </div>
+        
+        <div class="preview">
+            <h2>Preview</h2>
+            <div class="tshirt-container">
+                <svg class="tshirt-img" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- T-shirt shape -->
+                    <path id="tshirt-path" d="M150,50 L250,50 C250,50 270,80 290,90 C310,100 350,110 350,110 L330,150 C330,150 310,140 300,150 C300,200 300,300 300,350 L100,350 C100,300 100,200 100,150 C90,140 70,150 70,150 L50,110 C50,110 90,100 110,90 C130,80 150,50 150,50 Z" fill="white" stroke="#ccc" stroke-width="2" />
+                    <!-- Collar -->
+                    <path d="M170,50 C170,70 230,70 230,50" fill="none" stroke="#ccc" stroke-width="2" />
+                </svg>
+                <div class="tshirt-text" id="tshirt-text">Hello World!</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get all the control elements
+        const shirtColorSelect = document.getElementById('shirt-color');
+        const textContentTextarea = document.getElementById('text-content');
+        const textColorSelect = document.getElementById('text-color');
+        const fontFamilySelect = document.getElementById('font-family');
+        const fontSizeRange = document.getElementById('font-size');
+        const fontSizeValue = document.getElementById('font-size-value');
+        const textAlignSelect = document.getElementById('text-align');
+        const verticalPositionRange = document.getElementById('vertical-position');
+        const boldCheckbox = document.getElementById('bold-text');
+        const italicCheckbox = document.getElementById('italic-text');
+        const underlineCheckbox = document.getElementById('underline-text');
+        const shirtColorPreview = document.getElementById('shirt-color-preview');
+        const textColorPreview = document.getElementById('text-color-preview');
+        
+        // Get the elements to update
+        const tshirtPath = document.getElementById('tshirt-path');
+        const tshirtText = document.getElementById('tshirt-text');
+        
+        // Update functions
+        function updateShirtColor() {
+            const color = shirtColorSelect.value;
+            tshirtPath.setAttribute('fill', color);
+            shirtColorPreview.style.backgroundColor = color;
+        }
+        
+        function updateTextContent() {
+            tshirtText.innerHTML = textContentTextarea.value.replace(/\n/g, '<br>');
+        }
+        
+        function updateTextColor() {
+            const color = textColorSelect.value;
+            tshirtText.style.color = color;
+            textColorPreview.style.backgroundColor = color;
+        }
+        
+        function updateFontFamily() {
+            tshirtText.style.fontFamily = fontFamilySelect.value;
+        }
+        
+        function updateFontSize() {
+            const size = fontSizeRange.value;
+            tshirtText.style.fontSize = `${size}px`;
+            fontSizeValue.textContent = `${size}px`;
+        }
+        
+        function updateTextAlign() {
+            tshirtText.style.textAlign = textAlignSelect.value;
+        }
+        
+        function updateVerticalPosition() {
+            tshirtText.style.top = `${verticalPositionRange.value}px`;
+        }
+        
+        function updateTextStyle() {
+            tshirtText.style.fontWeight = boldCheckbox.checked ? 'bold' : 'normal';
+            tshirtText.style.fontStyle = italicCheckbox.checked ? 'italic' : 'normal';
+            tshirtText.style.textDecoration = underlineCheckbox.checked ? 'underline' : 'none';
+        }
+        
+        // Add event listeners
+        shirtColorSelect.addEventListener('change', updateShirtColor);
+        textContentTextarea.addEventListener('input', updateTextContent);
+        textColorSelect.addEventListener('change', updateTextColor);
+        fontFamilySelect.addEventListener('change', updateFontFamily);
+        fontSizeRange.addEventListener('input', updateFontSize);
+        textAlignSelect.addEventListener('change', updateTextAlign);
+        verticalPositionRange.addEventListener('input', updateVerticalPosition);
+        boldCheckbox.addEventListener('change', updateTextStyle);
+        italicCheckbox.addEventListener('change', updateTextStyle);
+        underlineCheckbox.addEventListener('change', updateTextStyle);
+        
+        // Initialize the preview
+        updateShirtColor();
+        updateTextContent();
+        updateTextColor();
+        updateFontFamily();
+        updateFontSize();
+        updateTextAlign();
+        updateVerticalPosition();
+        updateTextStyle();
+    </script>
+</body>
+</html>
