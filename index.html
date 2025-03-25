@@ -44,6 +44,7 @@
             justify-content: center;
             width: 100%;
             max-width: 500px;
+            position: relative;
         }
         
         .tshirt-container {
@@ -86,7 +87,100 @@
             z-index: 10;
         }
         
-        /* Rest of the previous CSS remains the same */
+        label {
+            display: block;
+            margin: 12px 0 5px;
+            font-weight: bold;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .color-preview {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            margin-left: 5px;
+            border-radius: 50%;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            margin: 0;
+        }
+        
+        .checkbox-label input {
+            width: auto;
+            margin-right: 5px;
+            margin-bottom: 0;
+        }
+        
+        .settings-section {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 16px;
+        }
+        
+        .print-area-handle {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 16px;
+            height: 16px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: se-resize;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -94,7 +188,89 @@
     
     <div class="container">
         <div class="controls">
-            <!-- Previous control section remains the same -->
+            <h2>Design Controls</h2>
+            
+            <div class="settings-section">
+                <h3 class="section-title">T-Shirt Options</h3>
+                <label for="shirt-color">Shirt Color:</label>
+                <select id="shirt-color">
+                    <option value="#FFFFFF">White</option>
+                    <option value="#000000">Black</option>
+                    <option value="#0a3d62">Navy Blue</option>
+                    <option value="#e74c3c">Red</option>
+                    <option value="#27ae60">Green</option>
+                    <option value="#7f8c8d">Gray</option>
+                    <option value="#f1c40f">Yellow</option>
+                    <option value="#8e44ad">Purple</option>
+                </select>
+                <div class="color-preview" id="shirt-color-preview" style="background-color: #FFFFFF;"></div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="section-title">Text Options</h3>
+                <label for="text-content">T-Shirt Text:</label>
+                <textarea id="text-content" placeholder="Enter the text for your t-shirt design here...">Hello World!</textarea>
+                
+                <label for="text-color">Text Color:</label>
+                <select id="text-color">
+                    <option value="#000000">Black</option>
+                    <option value="#FFFFFF">White</option>
+                    <option value="#e74c3c">Red</option>
+                    <option value="#3498db">Blue</option>
+                    <option value="#27ae60">Green</option>
+                    <option value="#f1c40f">Yellow</option>
+                    <option value="#8e44ad">Purple</option>
+                </select>
+                <div class="color-preview" id="text-color-preview" style="background-color: #000000;"></div>
+                
+                <label for="font-family">Font:</label>
+                <select id="font-family">
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', serif">Times New Roman</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="Impact, sans-serif">Impact</option>
+                    <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                    <option value="'Georgia', serif">Georgia</option>
+                </select>
+                
+                <label for="font-size">Font Size: <span id="font-size-value">24px</span></label>
+                <input type="range" id="font-size" min="12" max="60" value="24">
+                
+                <label for="text-align">Text Alignment:</label>
+                <select id="text-align">
+                    <option value="center">Center</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </select>
+                
+                <label>Text Style:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="bold-text"> Bold
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="italic-text"> Italic
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="underline-text"> Underline
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="section-title">Print Area</h3>
+                <label>Resize the print area by dragging the handle in the preview</label>
+                <label for="print-area-width">Width: <span id="print-area-width-value">220px</span></label>
+                <input type="range" id="print-area-width" min="100" max="300" value="220">
+                
+                <label for="print-area-height">Height: <span id="print-area-height-value">180px</span></label>
+                <input type="range" id="print-area-height" min="80" max="250" value="180">
+                
+                <label for="print-area-top">Vertical Position: <span id="print-area-top-value">140px</span></label>
+                <input type="range" id="print-area-top" min="100" max="220" value="140">
+            </div>
         </div>
         
         <div class="preview">
@@ -110,23 +286,173 @@
     </div>
     
     <script>
-        // Most of the previous JavaScript remains the same
-        // Remove SVG-specific manipulation functions
+        // Get all the control elements
+        const shirtColorSelect = document.getElementById('shirt-color');
+        const textContentTextarea = document.getElementById('text-content');
+        const textColorSelect = document.getElementById('text-color');
+        const fontFamilySelect = document.getElementById('font-family');
+        const fontSizeRange = document.getElementById('font-size');
+        const fontSizeValue = document.getElementById('font-size-value');
+        const textAlignSelect = document.getElementById('text-align');
+        const boldCheckbox = document.getElementById('bold-text');
+        const italicCheckbox = document.getElementById('italic-text');
+        const underlineCheckbox = document.getElementById('underline-text');
+        const shirtColorPreview = document.getElementById('shirt-color-preview');
+        const textColorPreview = document.getElementById('text-color-preview');
         
-        // Update functions that were SVG-specific
+        // Print area elements
+        const printArea = document.getElementById('print-area');
+        const printAreaHandle = document.getElementById('print-area-handle');
+        const printAreaWidthRange = document.getElementById('print-area-width');
+        const printAreaWidthValue = document.getElementById('print-area-width-value');
+        const printAreaHeightRange = document.getElementById('print-area-height');
+        const printAreaHeightValue = document.getElementById('print-area-height-value');
+        const printAreaTopRange = document.getElementById('print-area-top');
+        const printAreaTopValue = document.getElementById('print-area-top-value');
+        
+        // T-shirt and text elements
+        const tshirtImage = document.getElementById('tshirt-image');
+        const tshirtText = document.getElementById('tshirt-text');
+        
+        // Update functions
         function updateShirtColor() {
-            // This function might need to be adjusted based on the image
             const color = shirtColorSelect.value;
             shirtColorPreview.style.backgroundColor = color;
         }
         
-        function updateNeckStyle() {
-            // No longer applicable with an image
-            // You might want to remove this functionality or adapt it
+        function updateTextContent() {
+            tshirtText.innerHTML = textContentTextarea.value.replace(/\n/g, '<br>');
         }
         
-        // The rest of the script remains largely the same
-        // You may need to adjust some functions that were specific to SVG manipulation
+        function updateTextColor() {
+            const color = textColorSelect.value;
+            tshirtText.style.color = color;
+            textColorPreview.style.backgroundColor = color;
+        }
+        
+        function updateFontFamily() {
+            tshirtText.style.fontFamily = fontFamilySelect.value;
+        }
+        
+        function updateFontSize() {
+            const size = fontSizeRange.value;
+            tshirtText.style.fontSize = `${size}px`;
+            fontSizeValue.textContent = `${size}px`;
+            
+            // Adjust font size to fit inside print area
+            adjustTextToFit();
+        }
+        
+        function updateTextAlign() {
+            tshirtText.style.textAlign = textAlignSelect.value;
+        }
+        
+        function updateTextStyle() {
+            tshirtText.style.fontWeight = boldCheckbox.checked ? 'bold' : 'normal';
+            tshirtText.style.fontStyle = italicCheckbox.checked ? 'italic' : 'normal';
+            tshirtText.style.textDecoration = underlineCheckbox.checked ? 'underline' : 'none';
+            
+            // Adjust text to fit after style changes
+            adjustTextToFit();
+        }
+        
+        function updatePrintAreaSize() {
+            const width = printAreaWidthRange.value;
+            const height = printAreaHeightRange.value;
+            
+            printArea.style.width = `${width}px`;
+            printArea.style.height = `${height}px`;
+            
+            printAreaWidthValue.textContent = `${width}px`;
+            printAreaHeightValue.textContent = `${height}px`;
+            
+            // Adjust text to fit after size changes
+            adjustTextToFit();
+        }
+        
+        function updatePrintAreaPosition() {
+            const top = printAreaTopRange.value;
+            
+            printArea.style.top = `${top}px`;
+            printAreaTopValue.textContent = `${top}px`;
+        }
+        
+        function adjustTextToFit() {
+            // Making sure text fits within the boundaries
+            const fontSize = parseInt(fontSizeRange.value);
+            const textLength = textContentTextarea.value.length;
+            const areaWidth = parseInt(printAreaWidthRange.value);
+            const areaHeight = parseInt(printAreaHeightRange.value);
+            
+            // Simple algorithm to adjust font size if text is too long
+            if (textLength > 50 && fontSize > 20) {
+                const newSize = Math.max(12, fontSize - Math.floor(textLength / 50) * 2);
+                fontSizeRange.value = newSize;
+                tshirtText.style.fontSize = `${newSize}px`;
+                fontSizeValue.textContent = `${newSize}px`;
+            }
+        }
+        
+        // Print area resizing functionality
+        let isResizing = false;
+        printAreaHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            
+            const tshirtContainerRect = tshirtContainer.getBoundingClientRect();
+            const printAreaRect = printArea.getBoundingClientRect();
+            
+            // Calculate new width and height based on mouse position
+            let newWidth = e.clientX - printAreaRect.left;
+            let newHeight = e.clientY - printAreaRect.top;
+            
+            // Set constraints to keep print area within t-shirt
+            newWidth = Math.max(100, Math.min(300, newWidth));
+            newHeight = Math.max(80, Math.min(250, newHeight));
+            
+            // Update sliders
+            printAreaWidthRange.value = newWidth;
+            printAreaHeightRange.value = newHeight;
+            
+            // Update print area
+            updatePrintAreaSize();
+            
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+        });
+        
+        // Add event listeners
+        shirtColorSelect.addEventListener('change', updateShirtColor);
+        textContentTextarea.addEventListener('input', updateTextContent);
+        textColorSelect.addEventListener('change', updateTextColor);
+        fontFamilySelect.addEventListener('change', updateFontFamily);
+        fontSizeRange.addEventListener('input', updateFontSize);
+        textAlignSelect.addEventListener('change', updateTextAlign);
+        boldCheckbox.addEventListener('change', updateTextStyle);
+        italicCheckbox.addEventListener('change', updateTextStyle);
+        underlineCheckbox.addEventListener('change', updateTextStyle);
+        
+        printAreaWidthRange.addEventListener('input', updatePrintAreaSize);
+        printAreaHeightRange.addEventListener('input', updatePrintAreaSize);
+        printAreaTopRange.addEventListener('input', updatePrintAreaPosition);
+        
+        // Initialize the preview
+        updateShirtColor();
+        updateTextContent();
+        updateTextColor();
+        updateFontFamily();
+        updateFontSize();
+        updateTextAlign();
+        updateTextStyle();
+        updatePrintAreaSize();
+        updatePrintAreaPosition();
     </script>
 </body>
 </html>
